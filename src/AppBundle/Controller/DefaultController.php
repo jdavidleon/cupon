@@ -42,7 +42,7 @@ class DefaultController extends Controller{
         $em = $this->getDoctrine()->getManager();
         $oferta = $em->getRepository('AppBundle:Oferta')->findOneBy(array(
             'ciudad' => $this->getParameter('app.ciudad_por_defecto'),
-            'fechaPublicacion' => new \DateTime('today')
+//            'fechaPublicacion' => new \DateTime('today')
         ));
 
         if (!$oferta){
@@ -94,7 +94,21 @@ class DefaultController extends Controller{
 //        $entityManager = $this->getDoctrine()->getManager()M
 //        $entityManager->persist($oferta);
 //        $entityManager->flush();
+    }
 
+    /**
+     * @Route("/service/first")
+     */
+    public function listAction(){
+        $logger = $this->container->get('logger');
+        $logger->info('Look! I just aused a service');
+        $messageGenerator = $this->container->get('app.message_generator');
+        $message = $messageGenerator->getHappyMessage();
+        $this->addFlash('success', $message);
+
+        return $this->render('service/primero.html.twig');
 
     }
+
+
 }

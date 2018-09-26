@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use Doctrine\ORM\EntityRepository;
+
 /**
  * OfertaRepository
  *
@@ -10,6 +12,8 @@ namespace AppBundle\Repository;
  * cree una nueva caracteristica
  * arregle un bug
  */
+
+
 class OfertaRepository extends EntityRepository
 {
     public function findOfertaDelDia($ciudad){
@@ -18,9 +22,10 @@ class OfertaRepository extends EntityRepository
         $consulta->setParameters(array(
             'ciudad' => $ciudad,
             'fecha' => '2018-09-25 00:00:00'
-        ))
+        ));
         $consulta->setMaxResults(20);
         $cosnuilta->setFirstResult(10);
         $ofertas = $consulta->getResult();
     }
+
 }
