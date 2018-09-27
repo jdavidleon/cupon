@@ -7,7 +7,7 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    app.ciudad_por_defecto: '1'
+    app.ciudad_por_defecto: 'bta'
 
 framework:
     #esi: ~
@@ -30,6 +30,10 @@ framework:
         handler_id: ~
     fragments: ~
     http_method_override: true
+    assets:
+        packages:
+            ofertas:
+                base_path: 'uploads/images/'
 
 # Twig Configuration
 twig:

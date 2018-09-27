@@ -9,9 +9,21 @@
 namespace AppBundle\Service;
 
 
+use Psr\Log\LoggerInterface;
+
 class MessageGenerator
 {
+    public function __construct(LoggerInterface $logger, $loggingEnabled)
+    {
+        $this->logger = $logger;
+        $this->loggingEnabled = $loggingEnabled;
+    }
+    
     public function getHappyMessage(){
+
+        if ($this->loggingEnabled){
+            $this->logger->info('About to find a happy message');
+        }
 
         $messages = array(
             'Primer mensaje',

@@ -31,7 +31,7 @@ class DefaultController extends Controller{
      * @Route("/{ciudad}", defaults={ "ciudad" = "%app.ciudad_por_defecto%" }, name="portada")
      * @Route("/")
      */
-    public function portadaAction($ciudad){
+    public function portadaAction(Request $request, $ciudad){
 
         if ($ciudad === null){
             return $this->redirectToRoute('portada', array(
@@ -40,10 +40,11 @@ class DefaultController extends Controller{
         }
 
         $em = $this->getDoctrine()->getManager();
-        $oferta = $em->getRepository('AppBundle:Oferta')->findOneBy(array(
-            'ciudad' => $this->getParameter('app.ciudad_por_defecto'),
+//        $oferta = $em->getRepository('AppBundle:Oferta')->findOneBy(array(
+//            'ciudad' => $this->getParameter('app.ciudad_por_defecto'),
 //            'fechaPublicacion' => new \DateTime('today')
-        ));
+//        ));
+        $oferta = $em->getRepository('AppBundle:Oferta')->findOfertaDelDia($ciudad);
 
         if (!$oferta){
             throw $this->createNotFoundException(
@@ -54,7 +55,6 @@ class DefaultController extends Controller{
         return $this->render('portada.html.twig', array(
            'oferta' => $oferta
         ));
-
         //        $emOferta = $this->getDoctrine()->getRepository('AppBundle:Oferta');
 //        $emCiudad = $this->getDoctrine()->getRepository('AppBundle:Ciudad');
 //
@@ -97,17 +97,23 @@ class DefaultController extends Controller{
     }
 
     /**
+     * @Route("/ciudad/cambiar-a-{ciudad}", requirements={ "ciudad" = ".+" }, name="ciudad_cambiar")
+     */
+    public function cambiarAction($ciudad){
+        return $this->redirectToRoute('portada', array('ciudad' => $ciudad));
+    }
+
+    /**
      * @Route("/service/first")
      */
     public function listAction(){
-        $logger = $this->container->get('logger');
-        $logger->info('Look! I just aused a service');
+//        $logger = $this->container->get('logger');
+//        $logger->info('Look! I just aused a service');
         $messageGenerator = $this->container->get('app.message_generator');
         $message = $messageGenerator->getHappyMessage();
         $this->addFlash('success', $message);
 
         return $this->render('service/primero.html.twig');
-
     }
 
 
