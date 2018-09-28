@@ -1,4 +1,4 @@
-{% set ciudadSeleccionada = app.request.attributes.get('ciudad')|default('bta') %}
+{% set ciudadSeleccionada = app.request.attributes.get('ciudad', ciudad_por_defecto)  %}
 {# app/Resources/views/frontend.html.twig #}
 {% extends 'base.html.twig' %}
 {% block stylesheets %}{% endblock %}
@@ -11,7 +11,9 @@
                 <li><a href="{{ path('portada') }}">Oferta del día</a></li>
                 <li><a href="#">Ofertas recientes</a></li>
                 <li><a href="#">Mis ofertas</a></li>
-                <li>{{ render(controller('AppBundle:Ciudad:listaCiudades')) }}</li>
+                <li>{{ render(controller('AppBundle:Ciudad:listaCiudades', {
+                        ciudad: ciudadSeleccionada
+                    })) }}</li>
             </ul>
         </nav>
     </header>
@@ -20,6 +22,17 @@
         {% block article %}{% endblock %}
     </article>
     <aside>
-        {% block aside %}{% endblock %}
+        {% block aside %}
+            {{ parent() }}
+            <section id="relacionadas">
+                <h2>Ofertas en otras ciudades</h2>
+                <ul>
+                    {% for oferta in relacionadas %}
+                        <li>{{ oferta.ciudad.nombre }}: <a href="{{ path('oferta', { ciuda
+                                d: oferta.ciudad.slug, slug: oferta.slug }) }}">{{ oferta.nombre }}</a></li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% endblock %}
     </aside>
 {% endblock %}

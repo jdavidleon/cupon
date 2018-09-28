@@ -39,4 +39,41 @@ class OfertaRepository extends EntityRepository
         return $consulta->getSingleResult();
     }
 
+    public function findOferta($ciudad, $slug){
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQuery('
+            SELECT o, t, c 
+            FORM AppBundle:Oferta o
+            JOIN o.ciudad c JOIN o.tienda t
+            WHERE o.revisada = true
+            AND o.slug = :slug
+            AND o,ciudad = :ciudad  
+            ');
+        $consulta->setParameter('slug', $slug);
+        $consulta->setParameter('ciudad', $ciudad);
+        $consulta->setMaxResults(1);
+
+        return $consulta->getSingleResult();
+    }
+
+    public function findRelacionadas($ciudad){
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQuery('
+            SELECT o, c
+            FROM AppBundle:oferta o
+            JOIN o.ciudad c
+            WHERE o,revisada = true
+                AND o.fechaPublicacion <= :fecha
+                AND c.slug != :ciudad
+            ORDER BY 0.fechaPublicacion DESC
+            ');
+        $consulta->setMaxResults(5);
+        $consulta->setParameter('fecha', new \DateTime('today'));
+        $consulta->setParameter('ciudad', $ciudad);
+
+        return $consulta->getResult();
+    }
+
 }

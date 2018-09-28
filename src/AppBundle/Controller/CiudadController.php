@@ -8,17 +8,17 @@
 
 namespace AppBundle\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class CiudadController extends Controller
 {
-    public function listaCiudadesAction(){
+    public function listaCiudadesAction($ciudad){
         $em = $this->getDoctrine()->getManager();
         $ciudades = $em->getRepository('AppBundle:Ciudad')->findAll();
 
         return $this->render('ciudad/_lista_ciudades.html.twig', array(
-            'ciudades' => $ciudades
+            'ciudades' => $ciudades,
+            'ciudadActual' => $ciudad
         ));
     }
 }
