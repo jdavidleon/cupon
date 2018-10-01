@@ -1,3 +1,7 @@
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+_upload_data:
+    resource: "@UploadDataBundle/Resources/config/routing.yml"
+    prefix:   /uploads
