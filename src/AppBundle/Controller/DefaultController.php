@@ -109,8 +109,7 @@ class DefaultController extends Controller{
     public function listAction(){
 //        $logger = $this->container->get('logger');
 //        $logger->info('Look! I just aused a service');
-        $messageGenerator = $this->container->get('app.message_generator');
-        $message = $messageGenerator->getHappyMessage();
+        $message = $this->container->get('app.message_generator')->getHappyMessage();
         $this->addFlash('success', $message);
 
         return $this->render('service/primero.html.twig');
