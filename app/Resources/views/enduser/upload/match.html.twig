@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{% block title %}{% endblock %} | Cupon</title>
+    {% block stylesheets %}{% endblock %}
+
+</head>
+<body id="{% block id '' %}"><div id="contenedor">
+    {% block body %}
+
+       {# {{  dump(upload) }}
+        {{  dump(match_info) }}#}
+
+        <form method="post" action="{{ app.request.requestUri }}">
+
+            {% for name, options in match_info.configuredColumns %}
+
+                    <div class="">
+
+                        <div class="form-group">
+
+                            {% block column_label %}
+                                <label for="name">
+                                    {{ options.label|title }}
+                                    {% if options.required %}<span class="text-danger">*</span>{% endif %}
+                                </label>
+                            {% endblock column_label %}
+
+                            {% block column_select %}
+                                <select name="columns[{{ name }}]" class="form-control file-header" title="Select Column"
+                                     {%- if options.required %} required="required" {% endif -%}>
+                                     {%- if not options.required %}
+                                        <option value="">{{ emptyOptionLabel|default('-----------') }}</option>
+                                    {% endif %}
+                                    {% for index, file_header in match_info.fileHeaders %}
+                                        <option {% if match_info.hasMatch(name, file_header) %}selected="selected"
+                                                {% endif %}value="{{ index }}">
+                                            {{- file_header|title -}}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            {% endblock column_select %}
+
+                        </div>
+
+                    </div>
+
+            {% endfor %}
+
+            <input type="submit" value="Siguiente">
+
+        </form>
+
+    {% endblock %}
+    {% block javascripts %}{% endblock %}
+</div></body>
+</html>

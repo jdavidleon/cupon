@@ -11,3 +11,10 @@ services:
     app.message_generator:
          class: AppBundle\Service\MessageGenerator
          arguments: ['@logger', '%enabled_generator_loggin%']
+    app.upload_files:
+         class: AppBundle\Service\UploadFiles
+         arguments: []
+    app.upload.card_config:
+         class: AppBundle\Upload\Config\DealsUploadConfig
+         tags:
+         - { name: upload_data.config, id: 'deals', label: 'deals' }
