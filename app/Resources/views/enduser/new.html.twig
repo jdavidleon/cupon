@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{% block title %}{% endblock %} | Cupon</title>
+    {% block stylesheets %}{% endblock %}
+
+</head>
+<body id="{% block id '' %}"><div id="contenedor">
+    {% for flash_message in app.session.flashBag.get('error') %}
+        <div class="flash-notice">
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+
+    {% block body %}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <div class="col-xs-12 col-sm-3">
+            <input type="submit" class="btn btn_blue">
+        </div>
+        {{ form_end(form) }}
+
+    {% endblock %}
+    {% block javascripts %}{% endblock %}
+</div></body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{% block title %}{% endblock %} | Cupon</title>
+    {% block stylesheets %}
+        <style>
+            .table,
+            .table tr th,
+            .table tr td{
+                border: 1px solid black;
+            }
+        </style>
+    {% endblock %}
+
+</head>
+<body id="{% block id '' %}"><div id="contenedor">
+
+    {% block body %}
+
+        <table class="table table-single v-align-top table_sales_file" >
+            <thead>
+            <tr class="tr-first text-center">
+                <th width="16%">{{ 'label.sales.id'|trans }}<span></span></th>
+                <th width="16%">{{ 'label.filename'|trans }}<span></span></th>
+                <th width="16%">{{ 'label.sales.dateUpload'|trans }}<span></span></th>
+                <th width="8%">{{ 'label.total'|trans }}</th>
+                <th width="8%">{{ 'label.valids'|trans }}</th>
+                <th width="8%">{{ 'label.partial_valids'|trans }}</th>
+                <th width="8%">{{ 'label.invalids'|trans }}</th>
+                <th width="15%" class="text-center">{{ 'label.sale.list.calculated_credits'|trans }}</th>
+                <th width="15%" class="text-center">{{ 'label.sale.list.calculated_points'|trans }}</th>
+                <th width="8%" class="text-center">{{ 'label.sales.read'|trans }}</th>
+                <th width="8%" class="text-center">{{ 'label.sales.validate'|trans }}</th>
+                <th width="8%" class="text-center">{{ 'label.sales.update_product_list'|trans }}</th>
+                <th width="8%" class="text-center">{{ 'label.sales.calculate'|trans }}</th>
+                <th width="8%" class="text-center">{{ 'label.sales.transfer'|trans }}</th>
+                <th width="8%" class="text-center">{{ 'label.sales.delete'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in items %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.filename }}</td>
+                    <td>{{ item.uploadedAt|date('Y-m-d') }}</td>
+                    {% if item is upload_readed and item.total > 0 %}
+                        <td><a href="{#{{ path('optime_sales_upload_show', {id: item.id}) }}#}">{{ item.total }}</a></td>
+                    {% else %}
+                        <td>{{ item.total }}</td>
+                    {% endif %}
+                    {% if item is upload_validated and item.valids > 0 %}
+                        <td><a href="{#{{ path('optime_sales_upload_show_valids', {id: item.id}) }}#}">{{ item.valids|default('--') }}</a></td>
+                    {% else %}
+                        <td>{{ item.valids|default('--') }}</td>
+                    {% endif %}
+                    {% if item is upload_validated %}
+                        <td><a href="{#{{ path('optime_sales_upload_show_invalids', {id: item.id}) }}#}">{{ item.attributeValue('partial_invalids')|default('--') }}</a></td>
+                    {% else %}
+                        <td>{{ item.invalids|default('--') }}</td>
+                    {% endif %}
+                    {% if item is upload_validated and item.invalids > 0 %}
+                        <td><a href="{#{{ path('optime_sales_upload_show_invalids', {id: item.id}) }}#}">{{ item.invalids|default('--') }}</a></td>
+                    {% else %}
+                        <td>{{ item.invalids|default('--') }}</td>
+                    {% endif %}
+                    {% if item is upload_action_completed('calculate') %}
+                        {#<td><a href="{{ path('optime_sales_upload_show_invalids', {id: item.id}) }}">{{ item.invalids|default('--') }}</a></td>#}
+                        <td>
+                            <a href="{#{{ path('optime_sales_upload_show_points', {id: item.id, program: 'incentive'}) }}#}">
+                                PCSD: <span>{{ item.attributeValue('total_credits_pcsd') }}</span><br>
+                                DCG: <span>{{ item.attributeValue('total_credits_dcg') }}</span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{#{{ path('optime_sales_upload_show_points', {id: item.id, program: 'sales_rep'}) }}#}">
+                                PCSD: <span>{{ item.attributeValue('total_points_pcsd') }}</span><br>
+                                DCG: <span>{{ item.attributeValue('total_points_dcg') }}</span>
+                            </a>
+                        </td>
+                    {% else %}
+                        <td>--</td>
+                        <td>--</td>
+                    {% endif %}
+
+                    {#Action Button#}
+                    {#<td class="table-icon">#}
+                        {#{{ link_or_text(#}
+                            {#item is upload_action_actionable('read') and item is not upload_readed,#}
+                            {#item is upload_readed,#}
+                            {#path('optime_sales_upload_select_columns', {id: item.id})) }}#}
+                    {#</td>#}
+                    {#<td class="table-icon">#}
+                        {#{{ link_or_text(#}
+                            {#item is upload_action_actionable('validate'),#}
+                            {#item is upload_validated,#}
+                            {#path('optime_sales_upload_validate', {id: item.id})) }}#}
+                    {#</td>#}
+                    {#<td class="table-icon">#}
+                        {#{{ link_or_text(#}
+                            {#item is upload_action_actionable('update_product_list'),#}
+                            {#item is upload_action_completed('update_product_list'),#}
+                            {#path('optime_sales_upload_update_product_list', {id: item.id})) }}#}
+                    {#</td>#}
+                    {#<td class="table-icon">#}
+                        {#{{ link_or_text(#}
+                            {#item is upload_action_actionable('calculate'),#}
+                            {#item is upload_action_completed('calculate'),#}
+                            {#path('optime_sales_upload_calculate', {id: item.id})) }}#}
+                    {#</td>#}
+                    {#<td class="table-icon">#}
+                        {#{{ link_or_text(#}
+                            {#item is upload_action_actionable('transfer'),#}
+                            {#item is upload_transfered,#}
+                            {#path('optime_sales_upload_transfer', {id: item.id})) }}#}
+                    {#</td>#}
+                    {#<td class="table-icon">#}
+                        {#{{ link_or_text(item is upload_action_actionable('delete'), false, path('optime_sales_upload_delete', {id: item.id}), 'upload-sales-delete') }}#}
+                    {#</td>#}
+                    {# Action Buttton#}
+
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="100">{{ 'label.sales.upload.empty_list'|trans }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% endblock %}
+
+
+    {% block javascripts %}{% endblock %}
+</div></body>
+</html>
