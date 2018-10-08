@@ -17,10 +17,10 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-            //  upload data bundle ->
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Ku\AjaxBundle\KuAjaxBundle(),
             new Manuel\Bundle\UploadDataBundle\UploadDataBundle(),
+            new ManuelAguirre\Bundle\TranslationBundle\ManuelTranslationBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

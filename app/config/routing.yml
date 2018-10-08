@@ -5,3 +5,8 @@ app:
 _upload_data:
     resource: "@UploadDataBundle/Resources/config/routing.yml"
     prefix:   /uploads
+
+manuel_translations:
+    resource: "@ManuelTranslationBundle/Controller/"
+    type:     annotation
+    prefix:   /{_locale}/admin/trans

@@ -1,0 +1,17 @@
+'Day offer could not be found!': 'La oferta no pudo ser encontrada'
+label.sales.id: __label.sales.id
+label.filename: __label.filename
+label.sales.dateUpload: __label.sales.dateUpload
+label.total: __label.total
+label.valids: __label.valids
+label.partial_valids: __label.partial_valids
+label.invalids: __label.invalids
+label.sale.list.calculated_credits: __label.sale.list.calculated_credits
+label.sale.list.calculated_points: __label.sale.list.calculated_points
+label.sales.read: __label.sales.read
+label.sales.validate: __label.sales.validate
+label.sales.update_product_list: __label.sales.update_product_list
+label.sales.calculate: __label.sales.calculate
+label.sales.transfer: __label.sales.transfer
+label.sales.delete: __label.sales.delete
+label.sales.upload.empty_list: __label.sales.upload.empty_list

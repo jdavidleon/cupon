@@ -19,6 +19,7 @@
         "doctrine/orm": "^2.4.8",
         "incenteev/composer-parameter-handler": "~2.0",
         "knplabs/knp-paginator-bundle": "2.4.*",
+        "manuelj555/manuel-translation-bundle": "^2.0",
         "manuelj555/upload-data-bundle": "1.0.*@dev",
         "sensio/distribution-bundle": "~4.0",
         "sensio/framework-extra-bundle": "^3.0.2",
