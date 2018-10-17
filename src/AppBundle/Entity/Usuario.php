@@ -102,7 +102,7 @@ class Usuario
 
     public function __construct()
     {
-        $this->fechaAlta = new \Datetime(); 
+        $this->fechaAlta = new \Datetime(); /*hw*/
     }
 
     /**
