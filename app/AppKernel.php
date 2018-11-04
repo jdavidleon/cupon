@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new Ku\AjaxBundle\KuAjaxBundle(),
             new Manuel\Bundle\UploadDataBundle\UploadDataBundle(),
             new ManuelAguirre\Bundle\TranslationBundle\ManuelTranslationBundle(),
+            new SalesBundle\SalesBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
